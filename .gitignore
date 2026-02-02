@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# Flask / Python
+instance/
+*.sqlite3
+*.db
+*.log
+
+# Environment files
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / frontend (if any)
+node_modules/
+
+# Build
+dist/
+build/

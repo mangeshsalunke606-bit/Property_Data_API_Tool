@@ -1,0 +1,78 @@
+2026-02-02 10:58:06,181 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-02 10:58:06,182 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 10:58:06,184 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 10:58:07,162 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 10:58:07,167 - werkzeug - INFO -  * Debugger PIN: 872-311-955
+2026-02-02 10:58:31,238 - __main__ - WARNING - SECURITY EVENT: {'timestamp': '2026-02-02T05:28:31.237847', 'event_type': 'UNAUTHORIZED_ACCESS', 'details': 'Access denied to index', 'user_id': None, 'ip_address': '127.0.0.1'}
+2026-02-02 10:58:31,241 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:58:31] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-02 10:58:31,263 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:58:31] "GET /login HTTP/1.1" 200 -
+2026-02-02 10:58:31,503 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:58:31] "[36mGET /static/css/login.css HTTP/1.1[0m" 304 -
+2026-02-02 10:58:31,912 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:58:31] "GET /api/check-session HTTP/1.1" 200 -
+2026-02-02 10:59:14,460 - __main__ - WARNING - SECURITY EVENT: {'timestamp': '2026-02-02T05:29:14.460516', 'event_type': 'FAILED_LOGIN', 'details': 'Failed login attempt for: test@example.com', 'user_id': None, 'ip_address': '127.0.0.1'}
+2026-02-02 10:59:14,462 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:14] "[31m[1mPOST /api/login HTTP/1.1[0m" 401 -
+2026-02-02 10:59:26,906 - __main__ - INFO - Successful login: test@example.com
+2026-02-02 10:59:26,910 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:26] "POST /api/login HTTP/1.1" 200 -
+2026-02-02 10:59:27,947 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:27] "GET / HTTP/1.1" 200 -
+2026-02-02 10:59:28,243 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:28] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 10:59:28,281 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:28] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2026-02-02 10:59:28,592 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:28] "GET /api/check-session HTTP/1.1" 200 -
+2026-02-02 10:59:29,485 - __main__ - INFO - Processing address request: 519 Raton Pass, Irving, TX 75063 for user 1
+2026-02-02 10:59:34,952 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:34] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 10:59:35,288 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 10:59:35] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 11:00:00,250 - __main__ - INFO - Processing address request: 1201 Roxbury Dr Los Angeles 90035-1040 CA for user 1
+2026-02-02 11:00:04,851 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:04] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 11:00:05,194 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:05] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 11:00:58,446 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:58] "POST /api/logout HTTP/1.1" 200 -
+2026-02-02 11:00:58,777 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:58] "GET /login HTTP/1.1" 200 -
+2026-02-02 11:00:58,793 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:58] "[36mGET /static/css/login.css HTTP/1.1[0m" 304 -
+2026-02-02 11:00:59,026 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 11:00:59] "GET /api/check-session HTTP/1.1" 200 -
+2026-02-02 14:14:08,500 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-02 14:14:08,502 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 14:14:08,504 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 14:14:09,235 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 14:14:09,237 - werkzeug - INFO -  * Debugger PIN: 583-684-685
+2026-02-02 14:16:20,090 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-02 14:16:20,091 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 14:16:20,093 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 14:16:20,880 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 14:16:20,882 - werkzeug - INFO -  * Debugger PIN: 583-684-685
+2026-02-02 15:00:41,237 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-02-02 15:00:41,237 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 15:00:41,238 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 15:00:42,111 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 15:00:42,118 - werkzeug - INFO -  * Debugger PIN: 583-684-685
+2026-02-02 15:00:51,934 - __main__ - WARNING - SECURITY EVENT: {'timestamp': '2026-02-02T09:30:51.934646', 'event_type': 'UNAUTHORIZED_ACCESS', 'details': 'Access denied to index', 'user_id': None, 'ip_address': '127.0.0.1'}
+2026-02-02 15:00:51,936 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:51] "[32mGET / HTTP/1.1[0m" 302 -
+2026-02-02 15:00:52,038 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:52] "GET /login HTTP/1.1" 200 -
+2026-02-02 15:00:52,186 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:52] "GET /static/css/login.css HTTP/1.1" 200 -
+2026-02-02 15:00:52,544 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:52] "GET /api/check-session HTTP/1.1" 200 -
+2026-02-02 15:00:52,549 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:52] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-02 15:00:54,099 - __main__ - INFO - Successful login: test@example.com
+2026-02-02 15:00:54,103 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:54] "POST /api/login HTTP/1.1" 200 -
+2026-02-02 15:00:55,567 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:55] "GET / HTTP/1.1" 200 -
+2026-02-02 15:00:55,600 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:55] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-02-02 15:00:55,775 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:55] "GET /static/js/script.js HTTP/1.1" 200 -
+2026-02-02 15:00:56,092 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:00:56] "GET /api/check-session HTTP/1.1" 200 -
+2026-02-02 15:00:56,868 - __main__ - INFO - Processing address request: 519 Raton Pass, Irving, TX 75063 for user 1
+2026-02-02 15:01:01,736 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:01] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-02-02 15:01:01,740 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:01] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-02-02 15:01:03,260 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:03] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 15:01:03,636 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:03] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 15:01:21,641 - __main__ - INFO - Processing address request: 1201 Roxbury Dr Los Angeles 90035-1040 CA for user 1
+2026-02-02 15:01:26,164 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:26] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 15:01:26,502 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:26] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 15:01:57,971 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:01:57] "DELETE /api/delete-statistics HTTP/1.1" 200 -
+2026-02-02 15:02:00,899 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:02:00] "DELETE /api/delete-statistics HTTP/1.1" 200 -
+2026-02-02 15:02:04,262 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:02:04] "DELETE /api/delete-statistics HTTP/1.1" 200 -
+2026-02-02 15:02:47,815 - __main__ - INFO - Processing address request: 136 Esplanade San Clemente 92672 CA for user 1
+2026-02-02 15:02:52,121 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:02:52] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 15:02:52,145 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:02:52] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 15:03:20,662 - __main__ - INFO - Processing address request: 4595 W Spring Creek Pkwy #4226 Plano 75024 TX for user 1
+2026-02-02 15:03:24,960 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:03:24] "POST /api/fetch-data HTTP/1.1" 200 -
+2026-02-02 15:03:24,996 - werkzeug - INFO - 127.0.0.1 - - [02/Feb/2026 15:03:24] "GET /api/get-statistics-history HTTP/1.1" 200 -
+2026-02-02 15:03:58,947 - werkzeug - INFO -  * Detected change in 'D:\\production\\property-api-tool\\app.py', reloading
+2026-02-02 15:03:59,083 - werkzeug - INFO -  * Restarting with stat

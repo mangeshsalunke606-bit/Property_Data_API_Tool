@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Property Data Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Property Data Tool</h1>
+                <p id="headerText">Welcome Back</p>
+            </div>
+
+            <div class="auth-body">
+                <!-- Messages -->
+                <div id="messageBox" class="message hidden"></div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" name="email" required autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="login-password" name="password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+
+                    <div class="form-switch">
+                        <p>Don't have an account? <button type="button" onclick="showRegister()">Sign Up</button></p>
+                    </div>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form hidden">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" name="name" required autocomplete="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" name="email" required autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="register-password" name="password" required autocomplete="new-password">
+                            <button type="button" class="password-toggle" onclick="togglePassword('register-password', this)">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="register-confirm-password" name="confirm-password" required autocomplete="new-password">
+                            <button type="button" class="password-toggle" onclick="togglePassword('register-confirm-password', this)">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Create Account</button>
+
+                    <div class="form-switch">
+                        <p>Already have an account? <button type="button" onclick="showLogin()">Sign In</button></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000';
+
+        // Password Toggle Function
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Form switching
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('headerText').textContent = 'Welcome Back';
+            hideMessage();
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('headerText').textContent = 'Create Account';
+            hideMessage();
+        }
+
+        // Show/hide messages
+        function showMessage(text, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = text;
+            messageBox.className = 'message ' + (isError ? 'message-error' : 'message-success');
+            messageBox.classList.remove('hidden');
+
+            if (!isError) {
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 5000);
+            }
+        }
+
+        function hideMessage() {
+            document.getElementById('messageBox').classList.add('hidden');
+        }
+
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            hideMessage();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+
+            try {
+                const response = await fetch(`${API_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password, remember_me: rememberMe })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('Login successful! Redirecting...', false);
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    showMessage(data.error || 'Login failed', true);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('Network error. Please try again.', true);
+            }
+        });
+
+        // Handle register
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            hideMessage();
+
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, confirm_password: confirmPassword })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('Account created! Please log in.', false);
+                    this.reset();
+                    setTimeout(() => {
+                        showLogin();
+                    }, 2000);
+                } else {
+                    showMessage(data.error || 'Registration failed', true);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showMessage('Network error. Please try again.', true);
+            }
+        });
+
+        // Check if already logged in
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(`${API_URL}/api/check-session`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                if (data.logged_in) {
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Session check error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

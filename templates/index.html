@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Data API Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Property Data API Comparison Tool</h1>
+                    <p>Compare data from Regrid, Smarty, and Melissa APIs</p>
+                </div>
+                <button onclick="handleLogout()" class="btn btn-logout">Logout</button>
+            </div>
+        </header>
+
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="addressInput" 
+                    placeholder="Enter address (e.g., 519 Raton Pass, Irving, TX 75063 or 519 Raton Pass Irving TX 75063)"
+                    value="519 Raton Pass, Irving, TX 75063"
+                >
+                <button id="searchBtn" class="btn btn-primary">Fetch Data</button>
+            </div>
+            <div id="loadingSpinner" class="spinner hidden">
+                <div class="spinner-border"></div>
+                <span>Fetching data from APIs...</span>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+        <div id="successMessage" class="success-message hidden"></div>
+
+        <div id="resultsSection" class="results-section hidden">
+            <div class="table-controls">
+                <div class="info">
+                    <strong>Address:</strong> <span id="currentAddress"></span>
+                </div>
+                <div class="actions">
+                    <button id="saveBtn" class="btn btn-success">Save Selected Fields</button>
+                    <button id="clearBtn" class="btn btn-secondary">Clear All</button>
+                </div>
+            </div>
+
+
+
+
+            <!-- API Statistics Summary Section -->
+            <div id="apiStatistics" class="api-statistics-section">
+                <h3>📊 API Data Summary</h3>
+                <div class="stats-grid">
+                    <div class="stat-card stat-regrid" data-api="regrid">
+                        <div class="stat-header">
+                            <span class="api-name">Regrid API</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-row stat-available">
+                                <span class="stat-label">✓ Available:</span>
+                                <span class="stat-value" id="regridAvailable">0</span>
+                            </div>
+                            <div class="stat-row stat-unavailable" onclick="showNotFoundForAPI('regrid')">
+                                <span class="stat-label">✗ Unavailable:</span>
+                                <span class="stat-value stat-unavailable-value" id="regridUnavailable">0</span>
+                            </div>
+                            <div class="stat-row stat-total">
+                                <span class="stat-label">Total Fields:</span>
+                                <span class="stat-value" id="regridTotal">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-smarty" data-api="smarty">
+                        <div class="stat-header">
+                            <span class="api-name">Smarty API</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-row stat-available">
+                                <span class="stat-label">✓ Available:</span>
+                                <span class="stat-value" id="smartyAvailable">0</span>
+                            </div>
+                            <div class="stat-row stat-unavailable" onclick="showNotFoundForAPI('smarty')">
+                                <span class="stat-label">✗ Unavailable:</span>
+                                <span class="stat-value stat-unavailable-value" id="smartyUnavailable">0</span>
+                            </div>
+                            <div class="stat-row stat-total">
+                                <span class="stat-label">Total Fields:</span>
+                                <span class="stat-value" id="smartyTotal">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-melissa" data-api="melissa">
+                        <div class="stat-header">
+                            <span class="api-name">Melissa API</span>
+                        </div>
+                        <div class="stat-body">
+                            <div class="stat-row stat-available">
+                                <span class="stat-label">✓ Available:</span>
+                                <span class="stat-value" id="melissaAvailable">0</span>
+                            </div>
+                            <div class="stat-row stat-unavailable" onclick="showNotFoundForAPI('melissa')">
+                                <span class="stat-label">✗ Unavailable:</span>
+                                <span class="stat-value stat-unavailable-value" id="melissaUnavailable">0</span>
+                            </div>
+                            <div class="stat-row stat-total">
+                                <span class="stat-label">Total Fields:</span>
+                                <span class="stat-value" id="melissaTotal">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: API Statistics History Section -->
+            <div id="statisticsHistorySection" class="statistics-history-section hidden">
+                <div class="history-header">
+                    <h3>📜 API Statistics History</h3>
+                    <button id="exportHistoryBtn" class="btn btn-download">
+                        Export to Excel
+                    </button>
+                </div>
+                <p class="history-subtitle">All your previous address lookups</p>
+                
+                <div id="historyContainer" class="history-container">
+                    <!-- History cards will be inserted here -->
+                </div>
+            </div>
+
+            <!-- NEW: Field Discrepancies Section -->
+            <div id="discrepanciesSection" class="discrepancies-section hidden">
+                <h3>⚠️ Field Discrepancies</h3>
+                <p class="discrepancy-subtitle">Fields where API values differ (2 or more APIs with different values)</p>
+                <div class="table-wrapper">
+                    <table id="discrepanciesTable">
+                        <thead>
+                            <tr>
+                                <th class="status-column">Status</th>
+                                <th class="field-column">Field Name</th>
+                                <th class="api-column">Regrid API</th>
+                                <th class="api-column">Smarty API</th>
+                                <th class="api-column">Melissa API</th>
+                            </tr>
+                        </thead>
+                        <tbody id="discrepanciesTableBody">
+                            <!-- Discrepancy data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="comparisonTable">
+                    <thead>
+                        <tr>
+                            <th class="field-column">Field Name</th>
+                            <th class="api-column">Regrid API</th>
+                            <th class="api-column">Smarty API</th>
+                            <th class="api-column">Melissa API</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="summary-section">
+                <div class="summary-header">
+                    <h3>Selected Fields Summary</h3>
+                </div>
+                <div id="selectedSummary" class="selected-summary">
+                    <p class="no-selection">No fields selected yet. Click checkboxes to select data sources.</p>
+                </div>
+                <!-- Extract button -->
+                <div class="download-button-container" id="downloadButtonContainer" style="display: none;">
+                    <button onclick="showExtractModal()" class="btn btn-extract" id="extractBtn">
+                        Extract Selected Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address Not Found Modal -->
+    <div id="notFoundModal" class="modal hidden">
+        <div class="modal-content not-found-modal">
+            <div class="modal-header not-found-header">
+                <h2>🚫 Address Not Found</h2>
+                <button class="modal-close" onclick="closeNotFoundModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="not-found-content">
+                    <p class="not-found-message">The address <strong id="notFoundAddress"></strong> was not found in the following database(s):</p>
+                    <ul id="notFoundApiList" class="not-found-api-list">
+                        <!-- APIs will be populated here -->
+                    </ul>
+                    <div class="not-found-stats">
+                        <p><strong>Summary:</strong></p>
+                        <ul id="notFoundSummary">
+                            <!-- Summary stats will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeNotFoundModal()" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Format Modal -->
+    <div id="downloadModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Choose Download Format</h2>
+                <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="format-option">
+                    <input type="radio" id="formatJSON" name="downloadFormat" value="json" checked>
+                    <label for="formatJSON">
+                        <strong>JSON</strong>
+                        <span>Complete structured data with metadata</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="formatCSV" name="downloadFormat" value="csv">
+                    <label for="formatCSV">
+                        <strong>CSV</strong>
+                        <span>Standard comma-separated values</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="formatExcel" name="downloadFormat" value="excel">
+                    <label for="formatExcel">
+                        <strong>Excel (.xlsx)</strong>
+                        <span>Microsoft Excel format with formatting</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeDownloadModal()">Cancel</button>
+                <button class="btn btn-download" onclick="confirmDownload()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extract Selected Data Modal -->
+    <div id="extractModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Extract Selected Fields</h2>
+                <button class="modal-close" onclick="closeExtractModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="format-option">
+                    <input type="radio" id="extractJSON" name="extractFormat" value="json" checked>
+                    <label for="extractJSON">
+                        <strong>JSON</strong>
+                        <span>Complete structured data format</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="extractCSV" name="extractFormat" value="csv">
+                    <label for="extractCSV">
+                        <strong>CSV</strong>
+                        <span>Comma-separated values</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="extractExcel" name="extractFormat" value="excel">
+                    <label for="extractExcel">
+                        <strong>Excel (.xlsx)</strong>
+                        <span>Microsoft Excel spreadsheet</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeExtractModal()">Cancel</button>
+                <button class="btn btn-download" onclick="confirmExtract()">Extract</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <script>
+    // Logout function
+    async function handleLogout() {
+        if (confirm('Are you sure you want to logout?')) {
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Logout failed. Please try again.');
+            }
+        }
+    }
+
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('/api/check-session', {
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (!data.logged_in) {
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error('Session check error:', error);
+        }
+    });
+</script>
+
+</body>
+</html>

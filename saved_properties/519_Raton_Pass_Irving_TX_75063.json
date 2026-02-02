@@ -1,0 +1,15 @@
+{
+  "address": "519 Raton Pass, Irving, TX 75063",
+  "saved_at": "2026-02-02T15:08:51.651058",
+  "user_id": 1,
+  "user_email": "test@example.com",
+  "selections": {
+    "match_type": {
+      "api": "smarty",
+      "value": "parcel"
+    }
+  },
+  "merged_data": {
+    "match_type": "parcel"
+  }
+}
